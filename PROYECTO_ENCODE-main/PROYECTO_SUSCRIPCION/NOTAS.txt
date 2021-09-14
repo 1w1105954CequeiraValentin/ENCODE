@@ -1,0 +1,12 @@
+entidaddes: susciptor y suscripcion
+
+dal: contiene las clases donde estan las 
+consultas(metoodos) a la base de datos
+suscripcionDal - suscriptorDal
+
+
+bll: capa intermedia entre el back a la dal.
+suscriptorBll - suscripcionBll
+
+
+(se hace una clase por cada entidad )
