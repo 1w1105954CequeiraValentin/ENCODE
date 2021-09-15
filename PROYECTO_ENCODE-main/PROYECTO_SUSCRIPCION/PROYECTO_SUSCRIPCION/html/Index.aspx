@@ -21,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
     <%--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--%>
-
+    <link href="../css/Estilos.css" rel="stylesheet" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         function MsjNoSeEncontroSuscriptor() {
@@ -45,103 +45,11 @@
         function MsjTieneSuscripcion() {
             swal("Alerta", "El Suscriptor ya tiene Suscripcion", "warning")
         }
-    </script>
-
-    <title></title>
-</head>
-<body>
-    <form class="container" id="formSuscripcion" runat="server">
-        <h1>Suscripcion</h1>
-        <h6>Para realizar la suscripcion complete los siguientes datos</h6>
-        <h3>Buscar Suscriptor</h3>
-        <%-----------------------BUSCAR-------------------------------------%>
-        <%--<div class="container">--%>
-            <div class="row">
-                <div class="col-5">
-                    <label>Tipo Documento</label>
-                    <asp:DropDownList ID="cboTipoDoc" runat="server" CssClass="form-control">
-                        <asp:ListItem Text="Seleccione un tipo de documento..." />
-                        <asp:ListItem Text="DNI"/>
-                        <asp:ListItem Text="LC" />
-                        <asp:ListItem Text="PASAPORTE"/>
-                    </asp:DropDownList>
-                </div>
-                <div class="col-5">
-                    <label>Numero de Documento</label>
-                        <asp:TextBox runat="server" CssClass="form-control" ID="txtNroDocumento" placeholder="" type="text" />
-                </div>
-                <div class="col-2">
-                    <asp:Button runat="server" CssClass="btn btn-success mt-4 btn-lg" ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_Click" OnClientClick="Validaciones();"/>
-                </div>
-            </div>
-
-            <%-------------------------NUEVO-----------------------------------%>
-            <h3>Datos del Suscriptor</h3>
-
-            <div class="row">
-                <div class="col-5">
-                    <label>Nombre</label>
-                    <asp:TextBox runat="server" CssClass="form-control" ID="txtNombre" placeholder="" type="text" />
-                </div>
-                <div class="col-5">
-                    <label>Apellido</label>
-                    <asp:TextBox runat="server" CssClass="form-control" ID="txtApellido" placeholder="" type="text" />
-                </div>
-                <div class="col-2">
-                    <asp:Button runat="server" CssClass="btn btn-info mt-4 btn-lg" ID="btnNuevo" Text="Nuevo" OnClick="btnNuevo_Click" />
-                </div>
-            </div>
-
-            <%--------------------------MODIFICAR----------------------------------%>
-            <div class="row">
-                <div class="col-5">
-                    <label>Direccion</label>
-                    <asp:TextBox runat="server" CssClass="form-control mb-2" ID="txtDireccion" placeholder="" type="text" />
-                </div>
-                <div class="col-5">
-                    <label>Email</label>
-                        <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" placeholder="" type="email" />
-                </div>
-                <div class="col-2">
-                    <asp:Button runat="server" CssClass="btn btn-primary mt-4 btn-lg" ID="btnModificar" Text="Modificar" OnClick="btnModificar_Click" />
-                </div>
-            </div>
-            <%---------------------------GUARDAR---------------------------------%>
-            <div class="row">
-                <div class="col-5">
-                    <label>Telefono</label>
-                    <asp:TextBox runat="server" CssClass="form-control mb-2" ID="txtTelefono" placeholder="" type="text" />
-                </div>
-                <div class="col-5">
-                    <%--<label>Estado</label>
-                        <asp:TextBox runat="server" CssClass="form-control" ID="txtEstado" placeholder="" type="text" />--%>
-                </div>
-                <div class="col-2">
-                    <asp:Button runat="server" CssClass="btn btn-success mt-4 btn-lg" ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" OnClientClick="Validaciones();" />
-                </div>
-            </div>
+        function MensajeValidacion() {
+            swal("Alerta", "Debe ingresar todos los campos", "warning")
+        }
         
-        <%----------------------------CANCELAR--------------------------------%>
-        <div class="row">
-            <div class="col-5">
-                <label>Nombre de usuario</label>
-                <asp:TextBox runat="server" CssClass="form-control mb-2" ID="txtNombreUsuario" placeholder="" type="text" />
-            </div>
-            <div class="col-5">
-                <label>Contraseña</label>
-                    <asp:TextBox runat="server" CssClass="form-control" ID="txtContrasena" placeholder="" type="password" />
-            </div>
-            <div class="col-2">
-                <asp:Button Text="Cancelar" runat="server" ID="btnCancelar2" CssClass="btn btn-warning mt-4 btn-lg" OnClick="btnCancelar2_Click"/>
-            </div>
-        </div>
-        <%--</div>--%>
-        <%------------------------REGISTRAR SUSCRIPCION------------------------------------%>
-        <div>
-            <asp:Button runat="server" CssClass="btn btn-success mt-3 btn-lg" ID="btnRegistrarSuscripcion" Text="Registrar Suscripcion" OnClick="btnRegistrarSuscripcion_Click" />
-        </div>
-    </form>
-    <script>
+
         function Validaciones() {
             $("#formSuscripcion").validate({
                 rules: {
@@ -248,11 +156,108 @@
                 }
             });
         };
+    </script>
 
+    <title></title>
+
+</head>
+<body>
+    <form class="container" id="formSuscripcion" runat="server">
+        <h1>Suscripcion</h1>
+        <h6>Para realizar la suscripcion complete los siguientes datos</h6>
+        <h3>Buscar Suscriptor</h3>
+        <%-----------------------BUSCAR-------------------------------------%>
+        <%--<div class="container">--%>
+            <div class="row">
+                <div class="col-5">
+                    <label>Tipo Documento</label>
+                    <asp:DropDownList ID="cboTipoDoc" runat="server" CssClass="form-control">
+                        <asp:ListItem Text="Seleccione un tipo de documento..." />
+                        <asp:ListItem Text="DNI"/>
+                        <asp:ListItem Text="LC" />
+                        <asp:ListItem Text="PASAPORTE"/>
+                    </asp:DropDownList>
+                </div>
+                <div class="col-5">
+                    <label>Numero de Documento</label>
+                        <asp:TextBox runat="server" CssClass="form-control" ID="txtNroDocumento" placeholder="" type="text" />
+                </div>
+                <div class="col-2">
+                    <asp:Button runat="server" CssClass="btn btn-success mt-4 btn-lg" ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_Click" OnClientClick="Validaciones();"/>
+                </div>
+            </div>
+
+            <%-------------------------NUEVO-----------------------------------%>
+            <h3>Datos del Suscriptor</h3>
+
+            <div class="row">
+                <div class="col-5">
+                    <label>Nombre</label>
+                    <asp:TextBox runat="server" CssClass="form-control" ID="txtNombre" placeholder="" type="text" />
+                </div>
+                <div class="col-5">
+                    <label>Apellido</label>
+                    <asp:TextBox runat="server" CssClass="form-control" ID="txtApellido" placeholder="" type="text" />
+                </div>
+                <div class="col-2">
+                    <asp:Button runat="server" CssClass="btn btn-info mt-4 btn-lg" ID="btnNuevo" Text="Nuevo" OnClick="btnNuevo_Click" />
+                </div>
+            </div>
+
+            <%--------------------------MODIFICAR----------------------------------%>
+            <div class="row">
+                <div class="col-5">
+                    <label>Direccion</label>
+                    <asp:TextBox runat="server" CssClass="form-control mb-2" ID="txtDireccion" placeholder="" type="text" />
+                </div>
+                <div class="col-5">
+                    <label>Email</label>
+                        <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" placeholder="" TextMode="Email" />
+                </div>
+                <div class="col-2">
+                    <asp:Button runat="server" CssClass="btn btn-primary mt-4 btn-lg" ID="btnModificar" Text="Modificar" OnClick="btnModificar_Click" />
+                </div>
+            </div>
+            <%---------------------------GUARDAR---------------------------------%>
+            <div class="row">
+                <div class="col-5">
+                    <label>Telefono</label>
+                    <asp:TextBox runat="server" CssClass="form-control mb-2" ID="txtTelefono" placeholder="" type="text" />
+                </div>
+                <div class="col-5">
+                    <label>Estado</label>
+                        <asp:TextBox runat="server" CssClass="form-control" ID="txtEstado" placeholder="" type="text" />
+                </div>
+                <div class="col-2">
+                    <asp:Button runat="server" CssClass="btn btn-success mt-4 btn-lg" ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" OnClientClick="Validaciones();" />
+                </div>
+            </div>
+        
+        <%----------------------------CANCELAR--------------------------------%>
+        <div class="row">
+            <div class="col-5">
+                <label>Nombre de usuario</label>
+                <asp:TextBox runat="server" CssClass="form-control mb-2" ID="txtNombreUsuario" placeholder="" type="text" />
+            </div>
+            <div class="col-5">
+                <label>Contraseña</label>
+                    <asp:TextBox runat="server" CssClass="form-control" ID="txtContrasena" placeholder="" type="password" />
+            </div>
+            <div class="col-2">
+                <asp:Button Text="Cancelar" runat="server" ID="btnCancelar2" CssClass="btn btn-warning mt-4 btn-lg" OnClick="btnCancelar2_Click"/>
+            </div>
+        </div>
+        <%--</div>--%>
+        <%------------------------REGISTRAR SUSCRIPCION------------------------------------%>
+        <div>
+            <asp:Button runat="server" CssClass="btn btn-success mt-3 btn-lg" ID="btnRegistrarSuscripcion" Text="Registrar Suscripcion" OnClick="btnRegistrarSuscripcion_Click" />
+        </div>
+    </form>
+   <%-- <script>
         function recargarPagina() {
             // Recargo la página
             location.reload();
         }
-    </script>
+    </script>--%>
 </body>
 </html>

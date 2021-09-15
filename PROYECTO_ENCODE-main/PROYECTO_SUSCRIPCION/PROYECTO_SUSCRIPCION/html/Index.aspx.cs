@@ -16,7 +16,7 @@ namespace PROYECTO_SUSCRIPCION
         int id = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //txtEstado.Enabled = false;
+            txtEstado.Enabled = false;
             if (!IsPostBack)
             {
                 deshabilitarCampos();
@@ -25,6 +25,7 @@ namespace PROYECTO_SUSCRIPCION
                 btnGuardar.Enabled = false;
                 btnCancelar2.Enabled = false;
                 btnRegistrarSuscripcion.Enabled = false;
+                
             }
         }
 
@@ -39,10 +40,12 @@ namespace PROYECTO_SUSCRIPCION
                 btnModificar.Enabled = false;
                 limpiarCampos();
                 return;
+
             }else if (tipoD == s1.TipoDocumento && nroDoc == s1.NumeroDocumento)
             {
                 List<Suscripcion> lst = suscripcionBLL.lstSuscripcion();
                 var susc = lst.Where(x => x.IdSuscriptor == s1.IdSuscriptor).FirstOrDefault();
+                
                 if (susc != null)
                 {
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjTieneSuscripcion();", true);
@@ -56,47 +59,36 @@ namespace PROYECTO_SUSCRIPCION
                     txtNombreUsuario.Text = s1.NombreUsuario;
                     txtContrasena.Text = s1.Contrasena;
 
+                    txtEstado.Text = "Suscripto";
+
                     btnModificar.Enabled = true;
                     btnNuevo.Enabled = false;
                     btnRegistrarSuscripcion.Enabled = false;
                     btnGuardar.Enabled = false;
                 }
                 else { 
-                id = s1.IdSuscriptor;
-                ViewState["idSuscriptor"] = id;
-                txtNombre.Text = s1.NombreSuscriptor;
-                txtApellido.Text = s1.ApellidoSuscriptor;
-                txtDireccion.Text = s1.Direccion;
-                txtEmail.Text = s1.Email;
-                txtTelefono.Text = s1.NroTelefono;
-                txtNombreUsuario.Text = s1.NombreUsuario;
-                txtContrasena.Text = s1.Contrasena;
+                    id = s1.IdSuscriptor;
+                    ViewState["idSuscriptor"] = id;
+                    txtNombre.Text = s1.NombreSuscriptor;
+                    txtApellido.Text = s1.ApellidoSuscriptor;
+                    txtDireccion.Text = s1.Direccion;
+                    txtEmail.Text = s1.Email;
+                    txtTelefono.Text = s1.NroTelefono;
+                    txtNombreUsuario.Text = s1.NombreUsuario;
+                    txtContrasena.Text = s1.Contrasena;
+                    
+                    txtEstado.Text = "No Suscripto";
 
-                btnModificar.Enabled = true;
-                btnNuevo.Enabled = false;
-                btnRegistrarSuscripcion.Enabled = true;
-                btnGuardar.Enabled = false;
+                    btnModificar.Enabled = true;
+                    btnNuevo.Enabled = false;
+                    btnRegistrarSuscripcion.Enabled = true;
+                    btnGuardar.Enabled = false;
                 }
             }
-
-
-
         }
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            //if (cboTipoDoc.SelectedIndex == 0 || txtNroDocumento.Text == "")
-            //{
-            //    Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjIngreseTipoYNroDocumento();", true);
-            //    return;
-            //}
-            //else
-            //{
-                
-                
-            //}
             buscarSuscriptor(cboTipoDoc.SelectedValue, txtNroDocumento.Text);
-            
-
         }
 
         protected void btnNuevo_Click(object sender, EventArgs e)
@@ -175,47 +167,27 @@ namespace PROYECTO_SUSCRIPCION
                 cboTipoDoc.Enabled = true;
                 txtNroDocumento.Enabled = true;
                 deshabilitarCampos();
-
-                //Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "validarCampos();", true);
+                ValidarCampos();
                 return;
-
             }
-            else
+            else if(!modificarSuscriptor(txtNombre.Text, txtApellido.Text, txtDireccion.Text, txtTelefono.Text, txtEmail.Text, txtContrasena.Text, txtNroDocumento.Text))
             {
-                modificarSuscriptor(txtNombre.Text, txtApellido.Text, txtDireccion.Text, txtTelefono.Text, txtEmail.Text, txtContrasena.Text, txtNroDocumento.Text);
+                habilitarCampos();
+                //ValidarCampos();
+            }else
+            {
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjSuscriptorModificado();", true);
                 btnBuscar.Enabled = true;
-                btnRegistrarSuscripcion.Enabled = true;
+                btnRegistrarSuscripcion.Enabled = false;
                 btnGuardar.Enabled = false;
                 btnCancelar2.Enabled = true;
                 btnModificar.Enabled = false;
                 deshabilitarCampos();
                 cboTipoDoc.Enabled = true;
                 txtNroDocumento.Enabled = true;
-                //Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "validarCampos();", true);
                 return;
             }
-
-
         }
-
-        protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            //Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "recargarPagina();", true);
-            //btnBuscar.Enabled = true;
-            //btnCancelar.Enabled = false;
-            //btnModificar.Enabled = false;
-            //deshabilitarCampos();
-            //btnGuardar.Enabled = false;
-            //btnRegistrarSuscripcion.Enabled = false;
-            //limpiarCampos();
-            //cboTipoDoc.Enabled = true;
-            //txtNroDocumento.Enabled = true;
-            //txtNombre.Enabled = false;
-            
-
-        }
-
         public bool insertarSuscripcion()
         {
             Suscriptor suscriptor = suscriptorBLL.buscarSuscriptor(cboTipoDoc.SelectedValue, txtNroDocumento.Text);
@@ -228,7 +200,7 @@ namespace PROYECTO_SUSCRIPCION
         {
             insertarSuscripcion();
             Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjSuscripcionRegistrada();", true);
-            //Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "validarCampos();", true);
+            btnRegistrarSuscripcion.Enabled = false;
             return;
         }
         private void limpiarCampos()
@@ -243,7 +215,6 @@ namespace PROYECTO_SUSCRIPCION
             cboTipoDoc.Focus();
 
         }
-
         private void deshabilitarCampos()
         {
             txtNombre.Enabled = false;
@@ -265,7 +236,6 @@ namespace PROYECTO_SUSCRIPCION
             txtNombreUsuario.Enabled = true;
             txtContrasena.Enabled = true;
         }
-
         public string validarCamposVacios()
         {
 
@@ -317,7 +287,6 @@ namespace PROYECTO_SUSCRIPCION
             }
             return faltanDatos;
         }
-
         protected void btnCancelar2_Click(object sender, EventArgs e)
         {
             btnBuscar.Enabled = true;
@@ -331,6 +300,67 @@ namespace PROYECTO_SUSCRIPCION
             txtNroDocumento.Enabled = true;
             cboTipoDoc.SelectedIndex = 0;
             txtNroDocumento.Text = "";
+        }
+
+        private bool ValidarCampos()
+        {
+
+            if (cboTipoDoc.SelectedIndex < 1)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                cboTipoDoc.Focus();
+                return false;
+            }
+            if (txtNroDocumento.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtNroDocumento.Focus();
+                return false;
+            }
+            if (txtNombre.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                //txtNombre.Focus();
+                return false;
+            }
+            if (txtApellido.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtApellido.Focus();
+                return false;
+            }
+            if (txtDireccion.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtDireccion.Focus();
+                return false;
+            }
+            if (txtEmail.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtEmail.Focus();
+                return false;
+            }
+            if (txtTelefono.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtTelefono.Focus();
+                return false;
+            }
+            if (txtNombreUsuario.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtNombreUsuario.Focus();
+                return false;
+            }
+            if (txtContrasena.Text == string.Empty)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MensajeValidacion();", true);
+                txtContrasena.Focus();
+                return false;
+            }
+            return true;
+
         }
     }
 }
