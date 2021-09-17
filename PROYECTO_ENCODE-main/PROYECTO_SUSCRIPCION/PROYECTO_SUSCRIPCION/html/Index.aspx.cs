@@ -34,7 +34,8 @@ namespace PROYECTO_SUSCRIPCION
             Suscriptor s1 = suscriptorBLL.buscarSuscriptor(tipoD, nroDoc);
             if (s1 == null)
             {
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjNoSeEncontroSuscriptor();", true);
+                //Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjNoSeEncontroSuscriptor();", true);
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "funcionModal();", true);
                 btnNuevo.Enabled = true;
                 deshabilitarCampos();
                 btnModificar.Enabled = false;
@@ -159,6 +160,13 @@ namespace PROYECTO_SUSCRIPCION
         {
             if (bool.Parse(ViewState["Nuevo"].ToString()))
             {
+                if (suscriptorBLL.ValidarNombreUsuario(txtNombreUsuario.Text)>0)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjNombreUsuarioExiste();", true);
+                    btnNuevo.Enabled = false;
+                    txtNombreUsuario.Focus();
+                }
+                else { 
                 insertarSuscriptor(txtNombre.Text, txtApellido.Text, txtNroDocumento.Text, cboTipoDoc.Text, txtDireccion.Text, txtTelefono.Text, txtEmail.Text, txtNombreUsuario.Text, txtContrasena.Text);
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjSucriptorRegistrado();", true);
                 btnGuardar.Enabled = false;
@@ -169,6 +177,7 @@ namespace PROYECTO_SUSCRIPCION
                 deshabilitarCampos();
                 ValidarCampos();
                 return;
+                }
             }
             else if(!modificarSuscriptor(txtNombre.Text, txtApellido.Text, txtDireccion.Text, txtTelefono.Text, txtEmail.Text, txtContrasena.Text, txtNroDocumento.Text))
             {
@@ -201,6 +210,9 @@ namespace PROYECTO_SUSCRIPCION
             insertarSuscripcion();
             Page.ClientScript.RegisterStartupScript(this.GetType(), "MyFunction", "MsjSuscripcionRegistrada();", true);
             btnRegistrarSuscripcion.Enabled = false;
+            limpiarCampos();
+            cboTipoDoc.SelectedIndex = 0;
+            txtNroDocumento.Text = "";
             return;
         }
         private void limpiarCampos()

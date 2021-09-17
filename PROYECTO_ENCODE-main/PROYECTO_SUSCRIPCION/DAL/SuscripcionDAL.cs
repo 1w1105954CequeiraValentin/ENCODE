@@ -11,7 +11,7 @@ namespace DAL
 {
     public class SuscripcionDAL
     {
-        SqlConnection cone = new SqlConnection(@"Data Source=DESKTOP-02KC2T3\SQLEXPRESS;Initial Catalog=Suscripciones;User ID=valen; Password=12345; Integrated Security = false");
+        SqlConnection cone = new SqlConnection(@"Data Source=LAPTOP-50EP9CEV;Initial Catalog=Revista;Persist Security Info=True;User ID=sa; Password=Bimba2019.");
         SqlCommand comando = new SqlCommand();
         SqlDataReader dr = null;
 

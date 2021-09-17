@@ -24,5 +24,9 @@ namespace BLL
         {
             return suscriptorDAL.buscarSuscriptor(tipoDoc,numeroDoc);
         }
+        public int ValidarNombreUsuario(string nomUsu)
+        {
+            return suscriptorDAL.ValidarNombreUsuario(nomUsu);
+        }
     }
 }

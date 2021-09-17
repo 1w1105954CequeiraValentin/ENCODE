@@ -11,7 +11,8 @@ namespace DAL
 {
     public class SuscriptorDAL
     {
-        SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-02KC2T3\SQLEXPRESS;Initial Catalog=Suscripciones;User ID=valen; Password=12345; Integrated Security = false");
+        //SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-02KC2T3\SQLEXPRESS;Initial Catalog=Suscripciones;User ID=valen; Password=12345; Integrated Security = false");
+        SqlConnection con = new SqlConnection(@"Data Source=LAPTOP-50EP9CEV;Initial Catalog=Revista;Persist Security Info=True;User ID=sa; Password=Bimba2019.");
         SqlCommand comando = new SqlCommand();
         SqlDataReader dr = null;
 
@@ -28,13 +29,13 @@ namespace DAL
                 comando.CommandText = nombreSP;
                 comando.Parameters.AddWithValue("@nombre", suscriptor.NombreSuscriptor);
                 comando.Parameters.AddWithValue("@apellido", suscriptor.ApellidoSuscriptor);
-                comando.Parameters.AddWithValue("@nroDocumento", suscriptor.NumeroDocumento);
-                comando.Parameters.AddWithValue("@tipoDocumento", suscriptor.TipoDocumento);
+                comando.Parameters.AddWithValue("@nroDoc", suscriptor.NumeroDocumento);
+                comando.Parameters.AddWithValue("@tipoDoc", suscriptor.TipoDocumento);
                 comando.Parameters.AddWithValue("@direccion", suscriptor.Direccion);
-                comando.Parameters.AddWithValue("@telefono", suscriptor.NroTelefono);
+                comando.Parameters.AddWithValue("@tel", suscriptor.NroTelefono);
                 comando.Parameters.AddWithValue("@email", suscriptor.Email);
-                comando.Parameters.AddWithValue("@nomUsuario", suscriptor.NombreUsuario);
-                comando.Parameters.AddWithValue("@pass", suscriptor.Contrasena);
+                comando.Parameters.AddWithValue("@nombreUsuario", suscriptor.NombreUsuario);
+                comando.Parameters.AddWithValue("@pass", EncryptKeys.EncriptarPassword(suscriptor.Contrasena, "Keys"));
                 //Conexion.transaction = Conexion.conexion.BeginTransaction();
                 //Conexion.Comando.Transaction = Conexion.transaction;
                 comando.ExecuteNonQuery();
@@ -61,11 +62,13 @@ namespace DAL
                     comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.AddWithValue("@nombre", suscriptor1.NombreSuscriptor);
                     comando.Parameters.AddWithValue("@apellido", suscriptor1.ApellidoSuscriptor);
+                    comando.Parameters.AddWithValue("@nroDoc", suscriptor1.NumeroDocumento);
+                    comando.Parameters.AddWithValue("@tipoDoc", suscriptor1.TipoDocumento);
                     comando.Parameters.AddWithValue("@direccion", suscriptor1.Direccion);
-                    comando.Parameters.AddWithValue("@telefono", suscriptor1.NroTelefono);
+                    comando.Parameters.AddWithValue("@tel", suscriptor1.NroTelefono);
                     comando.Parameters.AddWithValue("@email", suscriptor1.Email);
-                    comando.Parameters.AddWithValue("@pass", suscriptor1.Contrasena);
-                    comando.Parameters.AddWithValue("@nroDocumento", suscriptor1.NumeroDocumento);
+                    comando.Parameters.AddWithValue("@pass", EncryptKeys.EncriptarPassword(suscriptor1.Contrasena, "Keys"));
+
                     comando.ExecuteNonQuery();
                     comando.Parameters.Clear();
                     return true;
@@ -147,26 +150,31 @@ namespace DAL
                 con.Close();
             }
         }
-        public bool validarNombreUsuario(string nombre)
+
+        public int ValidarNombreUsuario(string nomUsu)
         {
             try
             {
-                int fila;
+                int resultado;
                 con.Open();
                 comando.Connection = con;
-                comando.CommandText = "select * from Suscriptor where NombreUsuario = '{0}'";
-                fila = comando.ExecuteNonQuery();
-                if (fila != 0)
-                {
-                    return true;
-                }
-                return false;
+                comando.CommandText = string.Format("select count(*) " +
+                                     "from Suscriptor" +
+                                     " where NombreUsuario = '{0}'", nomUsu);
+                resultado = (int)comando.ExecuteScalar();
+                return resultado;
+
             }
+
             catch (Exception e)
             {
-                con.Close();
-                return false;
+                throw new Exception(e.Message);
             }
+            finally
+            {
+                con.Close();
+            }
+
         }
     }
 }

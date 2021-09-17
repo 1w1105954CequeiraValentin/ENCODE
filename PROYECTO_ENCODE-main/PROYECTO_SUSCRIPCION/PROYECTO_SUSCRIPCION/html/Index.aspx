@@ -48,114 +48,37 @@
         function MensajeValidacion() {
             swal("Alerta", "Debe ingresar todos los campos", "warning")
         }
-        
+        function MsjNombreUsuarioExiste() {
+            swal("Alerta", "El NOMBRE DE USUARIO YA EXISTE", "warning")
+        }
 
-        function Validaciones() {
-            $("#formSuscripcion").validate({
-                rules: {
-                    cboTipoDoc: {
-                        required: true
-                    },
-                    txtNroDocumento: {
-                        required: true,
-                        minlength: 7,
-                        maxlenght: 8,
-                        digits: true
-                    },
-                    txtNombre: {
-                        required: true,
-                        digits: false,
-                        minlength: 3,
-                        maxlenght: 12
-                    },
-                    txtApellido: {
-                        required: true,
-                        digits: false,
-                        minlength: 3,
-                        maxlenght: 12
-                    },
-                    txtDireccion: {
-                        required: true,
-                        number: false,
-                        minlenght: 4,
-                        maxlenght: 20
-                    },
-                    txtEmail: {
-                        required: true,
-                        email: true
-                    },
-                    txtTelefono: {
-                        required: true,
-                        number: false,
-                        digits: true,
-                        minlength: 7,
-                        maxlenght: 20
-                    },
-                    txtNombreUsuario: {
-                        required: true,
-                        number: false,
-                        minlenght: 4,
-                        maxlenght: 15
-                    },
-                    txtContrasena: {
-                        required: true,
-                        minlength: 4,
-                        maxlenght: 15
+        function funcionModal() {
+            swal({
+                title: "Suscriptor no encontrado",
+                text: "¿Desea registrar un nuevo suscriptor?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Boton nuevo habilitado", {
+                            icon: "success",
+                        });
+                        document.getElementById("btnNuevo").disabled = "";
+                        document.getElementById("btnBuscar").disabled = "";
+                        document.getElementById("btnCancelar2").disabled = "";
+                        document.getElementById("btnRegistrarSuscripcion").disabled = "disabled";
+
+                    } else {
+                        document.getElementById("btnNuevo").disabled = "disabled";
+                        document.getElementById("btnCancelar2").disabled = "";
+                        document.getElementById("btnRegistrarSuscripcion").disabled = "disabled";
                     }
-                },
-                messages: {
-                    cboTipoDoc: {
-                        required: "Debe seleccionar tipo de doc"
-                    },
-                    txtNroDocumento: {
-                        required: "Debe ingresar documento",
-                        minlength: "Debe ingresar al menos 7 digitos",
-                        maxlenght: "Debe ingresar como máximo 8 digitos",
-                        digits: "Debe ingresar solo digitos"
-                    },
-                    txtNombre: {
-                        required: "Ingrese nombre",
-                        number: "Ingrese solo letras",
-                        minlenght: "Debe ingresar un mínimo de 3 caracteres",
-                        maxlenght: "Debe ingresar un máximo de 12 caracteres"
-                    },
-                    txtApellido: {
-                        required: "Ingrese Apellido",
-                        digits: "Ingrese solo letras",
-                        minlength: "Debe ingresar un mínimo de 3 caracteres",
-                        maxlenght: "Debe ingresar un máximo de 12 caracteres"
-                    },
-                    txtDireccion: {
-                        required: "Ingrese dirección",
-                        number: "No se permiten números decimales",
-                        minlenght: "Debe ingresar un mínimo de 4 caracteres",
-                        maxlenght: "Debe ingresar un máximo de 20 caracteres"
-                    },
-                    txtEmail: {
-                        required: "Ingrese email",
-                        email: "El email debe tener formato: abc@dominio.com"
-                    },
-                    txtTelefono: {
-                        required: "Ingresar Telefono",
-                        number: "No se permiten números decimales",
-                        digits: "Debe ingresar solo números",
-                        minlength: "Debe ingresar un mínimo de 7 números",
-                        maxlenght: "Debe ingresar un máximo de 20 números"
-                    },
-                    txtNombreUsuario: {
-                        required: "Ingresar nombre usuario",
-                        number: "No se permiten números decimales",
-                        minlenght: "Debe ingresar un mínimo de 4 caracteres",
-                        maxlenght: "Debe ingresar un máximo de 15 caracteres"
-                    },
-                    txtContrasena: {
-                        required: "Ingrese una contraseña",
-                        minlength: "Debe ingresar un mínimo de 4 caracteres",
-                        maxlenght: "Debe ingresar un máximo de 15 caracteres"
-                    }
-                }
-            });
-        };
+                });
+        }
+        //ACA ESTABA EL .VALIDATE
+
     </script>
 
     <title></title>
@@ -183,10 +106,9 @@
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtNroDocumento" placeholder="" type="text" />
                 </div>
                 <div class="col-2">
-                    <asp:Button runat="server" CssClass="btn btn-success mt-4 btn-lg" ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_Click" OnClientClick="Validaciones();"/>
+                   <asp:Button runat="server" CssClass="btn btn-success mt-4 btn-lg" ID="btnBuscar" Text="Buscar" OnClick="btnBuscar_Click" OnClientClick="Validaciones();"/>
                 </div>
             </div>
-
             <%-------------------------NUEVO-----------------------------------%>
             <h3>Datos del Suscriptor</h3>
 
@@ -253,11 +175,158 @@
             <asp:Button runat="server" CssClass="btn btn-success mt-3 btn-lg" ID="btnRegistrarSuscripcion" Text="Registrar Suscripcion" OnClick="btnRegistrarSuscripcion_Click" />
         </div>
     </form>
-   <%-- <script>
-        function recargarPagina() {
-            // Recargo la página
-            location.reload();
-        }
-    </script>--%>
 </body>
+<script>
+    //$(document).ready(function () {
+    ////function Validaciones() {
+    //    $("#formSuscripcion").validate({
+    //        rules: {
+    //            cboTipoDoc: {
+    //                required: true
+    //            },
+    //            txtNroDocumento: {
+    //                required: true,
+    //                minlength: 7,
+    //                maxlenght: 8,
+    //                digits: true
+    //            },
+    //            txtNombre: {
+    //                required: true,
+    //                digits: false,
+    //                minlength: 3,
+    //                maxlenght: 12
+    //            },
+    //            txtApellido: {
+    //                required: true,
+    //                digits: false,
+    //                minlength: 3,
+    //                maxlenght: 12
+    //            },
+    //            txtDireccion: {
+    //                required: true,
+    //                number: false,
+    //                minlenght: 4,
+    //                maxlenght: 20
+    //            },
+    //            txtEmail: {
+    //                required: true,
+    //                email: true
+    //            },
+    //            txtTelefono: {
+    //                required: true,
+    //                number: false,
+    //                digits: true,
+    //                minlength: 7,
+    //                maxlenght: 20
+    //            },
+    //            txtNombreUsuario: {
+    //                required: true,
+    //                number: false,
+    //                minlenght: 4,
+    //                maxlenght: 15
+    //            },
+    //            txtContrasena: {
+    //                required: true,
+    //                minlength: 4,
+    //                maxlenght: 15
+    //            }
+    //        },
+    //        messages: {
+    //            cboTipoDoc: {
+    //                required: "Debe seleccionar tipo de doc"
+    //            },
+    //            txtNroDocumento: {
+    //                required: "Debe ingresar documento",
+    //                minlength: "Debe ingresar al menos 7 digitos",
+    //                maxlenght: "Debe ingresar como máximo 8 digitos",
+    //                digits: "Debe ingresar solo digitos"
+    //            },
+    //            txtNombre: {
+    //                required: "Ingrese nombre",
+    //                number: "Ingrese solo letras",
+    //                minlenght: "Debe ingresar un mínimo de 3 caracteres",
+    //                maxlenght: "Debe ingresar un máximo de 12 caracteres"
+    //            },
+    //            txtApellido: {
+    //                required: "Ingrese Apellido",
+    //                digits: "Ingrese solo letras",
+    //                minlength: "Debe ingresar un mínimo de 3 caracteres",
+    //                maxlenght: "Debe ingresar un máximo de 12 caracteres"
+    //            },
+    //            txtDireccion: {
+    //                required: "Ingrese dirección",
+    //                number: "No se permiten números decimales",
+    //                minlenght: "Debe ingresar un mínimo de 4 caracteres",
+    //                maxlenght: "Debe ingresar un máximo de 20 caracteres"
+    //            },
+    //            txtEmail: {
+    //                required: "Ingrese email",
+    //                email: "El email debe tener formato: abc@dominio.com"
+    //            },
+    //            txtTelefono: {
+    //                required: "Ingresar Telefono",
+    //                number: "No se permiten números decimales",
+    //                digits: "Debe ingresar solo números",
+    //                minlength: "Debe ingresar un mínimo de 7 números",
+    //                maxlenght: "Debe ingresar un máximo de 20 números"
+    //            },
+    //            txtNombreUsuario: {
+    //                required: "Ingresar nombre usuario",
+    //                number: "No se permiten números decimales",
+    //                minlenght: "Debe ingresar un mínimo de 4 caracteres",
+    //                maxlenght: "Debe ingresar un máximo de 15 caracteres"
+    //            },
+    //            txtContrasena: {
+    //                required: "Ingrese una contraseña",
+    //                minlength: "Debe ingresar un mínimo de 4 caracteres",
+    //                maxlenght: "Debe ingresar un máximo de 15 caracteres"
+    //            }
+    //        }
+    //    });
+    //});
+    $(document).ready(function () {
+        $("#formSuscripcion").validate({
+            rules: {
+                cboTipoDoc: { required: true},
+                txtNroDocumento: { required: true},
+                txtNombre: { required: true},
+                txtApellido: { required: true},
+                txtDireccion: { required: true},
+                txtEmail: { required: true},
+                txtTelefono: { required: true},
+                txtNombreUsuario: { required: true},
+                txtContrasena: { required: true},
+            },
+            messages: {
+                cboTipoDoc: {
+                    required: 'Por favor seleccione una opción'
+                },
+                txtDocumento: {
+                    required: 'Por favor ingrese su documento'
+                },
+                txtNombre: {
+                    required: 'Por favor ingrese su nombre'
+                },
+                txtApellido: {
+                    required: 'Por favor ingrese su apellido'
+                },
+                txtDireccion: {
+                    required: 'Ingrese su dirección'
+                },
+                txtEmail: {
+                    required: 'Debe ingresar una direccion de email'
+                },
+                txtTelefono: {
+                    required: 'Ingrese numero de telefono'
+                },
+                txtNombreUsuario: {
+                    required: 'Ingrese nombre de usuario'
+                },
+                txtContrasenia: {
+                    required: 'Ingrese una contraseña'
+                }
+            }
+        });
+    });
+</script>
 </html>
