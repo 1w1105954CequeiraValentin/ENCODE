@@ -171,119 +171,21 @@
         </div>
         <%--</div>--%>
         <%------------------------REGISTRAR SUSCRIPCION------------------------------------%>
-        <div>
-            <asp:Button runat="server" CssClass="btn btn-success mt-3 btn-lg" ID="btnRegistrarSuscripcion" Text="Registrar Suscripcion" OnClick="btnRegistrarSuscripcion_Click" />
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <asp:Button runat="server" CssClass="btn btn-success mt-3 btn-lg" ID="btnRegistrarSuscripcion" Text="Registrar Suscripcion" OnClick="btnRegistrarSuscripcion_Click" />
+                </div>
+            </div>
+            <%--<div class="col-6">
+                <div>
+                    <asp:Button runat="server" CssClass="btn btn-danger mt-3 btn-lg" ID="btnEliminarSuscripcion" Text="Eliminar Suscripcion" OnClick="btnEliminarSuscripcion_Click" />
+                </div>
+            </div>--%>
         </div>
     </form>
 </body>
 <script>
-    //$(document).ready(function () {
-    ////function Validaciones() {
-    //    $("#formSuscripcion").validate({
-    //        rules: {
-    //            cboTipoDoc: {
-    //                required: true
-    //            },
-    //            txtNroDocumento: {
-    //                required: true,
-    //                minlength: 7,
-    //                maxlenght: 8,
-    //                digits: true
-    //            },
-    //            txtNombre: {
-    //                required: true,
-    //                digits: false,
-    //                minlength: 3,
-    //                maxlenght: 12
-    //            },
-    //            txtApellido: {
-    //                required: true,
-    //                digits: false,
-    //                minlength: 3,
-    //                maxlenght: 12
-    //            },
-    //            txtDireccion: {
-    //                required: true,
-    //                number: false,
-    //                minlenght: 4,
-    //                maxlenght: 20
-    //            },
-    //            txtEmail: {
-    //                required: true,
-    //                email: true
-    //            },
-    //            txtTelefono: {
-    //                required: true,
-    //                number: false,
-    //                digits: true,
-    //                minlength: 7,
-    //                maxlenght: 20
-    //            },
-    //            txtNombreUsuario: {
-    //                required: true,
-    //                number: false,
-    //                minlenght: 4,
-    //                maxlenght: 15
-    //            },
-    //            txtContrasena: {
-    //                required: true,
-    //                minlength: 4,
-    //                maxlenght: 15
-    //            }
-    //        },
-    //        messages: {
-    //            cboTipoDoc: {
-    //                required: "Debe seleccionar tipo de doc"
-    //            },
-    //            txtNroDocumento: {
-    //                required: "Debe ingresar documento",
-    //                minlength: "Debe ingresar al menos 7 digitos",
-    //                maxlenght: "Debe ingresar como máximo 8 digitos",
-    //                digits: "Debe ingresar solo digitos"
-    //            },
-    //            txtNombre: {
-    //                required: "Ingrese nombre",
-    //                number: "Ingrese solo letras",
-    //                minlenght: "Debe ingresar un mínimo de 3 caracteres",
-    //                maxlenght: "Debe ingresar un máximo de 12 caracteres"
-    //            },
-    //            txtApellido: {
-    //                required: "Ingrese Apellido",
-    //                digits: "Ingrese solo letras",
-    //                minlength: "Debe ingresar un mínimo de 3 caracteres",
-    //                maxlenght: "Debe ingresar un máximo de 12 caracteres"
-    //            },
-    //            txtDireccion: {
-    //                required: "Ingrese dirección",
-    //                number: "No se permiten números decimales",
-    //                minlenght: "Debe ingresar un mínimo de 4 caracteres",
-    //                maxlenght: "Debe ingresar un máximo de 20 caracteres"
-    //            },
-    //            txtEmail: {
-    //                required: "Ingrese email",
-    //                email: "El email debe tener formato: abc@dominio.com"
-    //            },
-    //            txtTelefono: {
-    //                required: "Ingresar Telefono",
-    //                number: "No se permiten números decimales",
-    //                digits: "Debe ingresar solo números",
-    //                minlength: "Debe ingresar un mínimo de 7 números",
-    //                maxlenght: "Debe ingresar un máximo de 20 números"
-    //            },
-    //            txtNombreUsuario: {
-    //                required: "Ingresar nombre usuario",
-    //                number: "No se permiten números decimales",
-    //                minlenght: "Debe ingresar un mínimo de 4 caracteres",
-    //                maxlenght: "Debe ingresar un máximo de 15 caracteres"
-    //            },
-    //            txtContrasena: {
-    //                required: "Ingrese una contraseña",
-    //                minlength: "Debe ingresar un mínimo de 4 caracteres",
-    //                maxlenght: "Debe ingresar un máximo de 15 caracteres"
-    //            }
-    //        }
-    //    });
-    //});
     $(document).ready(function () {
         $("#formSuscripcion").validate({
             rules: {
@@ -301,7 +203,7 @@
                 cboTipoDoc: {
                     required: 'Por favor seleccione una opción'
                 },
-                txtDocumento: {
+                txtNroDocumento: {
                     required: 'Por favor ingrese su documento'
                 },
                 txtNombre: {
@@ -322,7 +224,7 @@
                 txtNombreUsuario: {
                     required: 'Ingrese nombre de usuario'
                 },
-                txtContrasenia: {
+                txtContrasena: {
                     required: 'Ingrese una contraseña'
                 }
             }

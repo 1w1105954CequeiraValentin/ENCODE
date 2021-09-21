@@ -374,5 +374,10 @@ namespace PROYECTO_SUSCRIPCION
             return true;
 
         }
+
+        protected void btnEliminarSuscripcion_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
